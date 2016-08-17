@@ -21,17 +21,41 @@
             android:id="@+id/lblnombre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Autor"
+            android:text="Isbn"
             android:background="#ff1ca5fd"/>
 
         <EditText android:id="@+id/TxtImagenHint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/ic_usuario"
-            android:hint="usuario"
+            android:hint="Isbn"
             android:textColorHint="#CFCFCF"
             android:inputType="text" />
 
+        <TextView
+            android:id="@+id/lbltitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titulo"
+            android:background="#ff1ca5fd"/>
+
+        <EditText android:id="@+id/TxtTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Titulo"
+            android:textColorHint="#CFCFCF"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/lblAutor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autor"
+            android:background="#ff1ca5fd"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:layout_gravity="center_horizontal" />
 
 
 
