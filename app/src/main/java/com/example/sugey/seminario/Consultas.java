@@ -1,8 +1,8 @@
 package com.example.sugey.seminario;
 
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import com.example.sugey.seminario.baseDeDatos.Conexion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class Consultas {
     private String[] datos;
-    Conexion Conexion;
+    com.example.sugey.seminario.baseDeDatos.Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
     private Spinner cmbAutores;

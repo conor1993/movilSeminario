@@ -1,4 +1,4 @@
-package com.example.sugey.seminario;
+package com.example.sugey.seminario.baseDeDatos;
 
 /**
  * Created by Sugey on 18/08/2016.
