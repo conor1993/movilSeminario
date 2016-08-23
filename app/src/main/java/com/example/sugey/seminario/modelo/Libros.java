@@ -20,23 +20,20 @@ public class Libros {
     ResultSet rs;
 
     //atributos
-   String autor;
-
-    public Libros(){
-       this.autor ="";
+    int id;
+    String nombre;
+    //Constructor
+    public Libros(int id, String nombre) {
+        super();
+        this.id = id;
+        this.nombre = nombre;
     }
-
-    public Libros(String autor){
-         this.autor = autor;
+    @Override
+    public String toString() {
+        return nombre;
     }
-
-
-    public void setAutor(String autor){
-         this.autor = autor;
-    }
-
-    public  String getAutor(){
-        return autor;
+    public int getId() {
+        return id;
     }
 
     public ArrayList<String> obtenerAutores(){

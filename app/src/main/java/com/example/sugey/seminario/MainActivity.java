@@ -13,12 +13,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.sugey.seminario.modelo.Libros;
+import com.example.sugey.seminario.modelo.comidas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,15 +52,24 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void llenarCombos(){
-        libro = new Libros();
+
         ArrayAdapter NoCoreAdapter2;
 
 
         //llenar combo autores
+        LinkedList comidas = new LinkedList();
+        comidas.add(new Libros(1, "Salchichas"));
+        comidas.add(new Libros(30, "noce"));
+
         cmbAutores =   (Spinner)findViewById(R.id.cmbautor);
-        NoCoreAdapter2 = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, libro.obtenerAutores());
+        NoCoreAdapter2 = new ArrayAdapter(this, android.R.layout.simple_spinner_item, comidas);
+        NoCoreAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         cmbAutores.setAdapter(NoCoreAdapter2);
 
+
+
+
+         /*
         //llenar combo editorial
         cmbEditorial = (Spinner)findViewById(R.id.cmbEditorial);
         NoCoreAdapter2 = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, libro.obtenerEditorial());
@@ -68,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         cmbPais = (Spinner)findViewById(R.id.cmbPais);
         NoCoreAdapter2 = new ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, libro.obtenerPias());
         cmbPais.setAdapter(NoCoreAdapter2);
-
+        */
     }
 
 
