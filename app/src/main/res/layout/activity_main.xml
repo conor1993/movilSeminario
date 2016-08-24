@@ -9,13 +9,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
         <TextView
-            android:id="@+id/lblnombre"
+            android:id="@+id/lblisbn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Isbn"
             />
 
-        <EditText android:id="@+id/TxtImagenHint"
+        <EditText android:id="@+id/TxtIsbn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Isbn"
@@ -108,7 +108,7 @@
             android:id="@+id/lblFormato"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Estado de libro"
+            android:text="Formato de libro"
             android:layout_marginTop="2dp"
             />
         <Spinner
@@ -220,11 +220,28 @@
             android:id="@+id/cmbRama"
             android:layout_marginTop="2dp"
             android:layout_gravity="center_horizontal"/>
+
+        <CheckBox android:id="@+id/ChkExclusivoConsulta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Exclusivo consulta"
+            android:checked="false" />
+
+        <CheckBox android:id="@+id/ChkIlustrado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Ilustrado"
+            android:checked="false" />
+
         <Button
             android:id="@+id/btnGuardar"
             android:text="guardar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+
 
     </LinearLayout>
 
