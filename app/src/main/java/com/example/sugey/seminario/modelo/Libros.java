@@ -258,7 +258,7 @@ public class Libros {
                cst.setInt(23,Estatus);
                cst.setString(24,numero);
                cst.executeUpdate();
-
+               cst.close();
            } catch (Exception ex) {
 
                System.out.println ("El error es: " + ex.getMessage());
