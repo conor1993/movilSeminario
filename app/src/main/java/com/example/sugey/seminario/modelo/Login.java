@@ -52,7 +52,7 @@ public class Login {
     public boolean logearse() {
         Boolean logeo = false;
         log=0;
-
+         //llamamos a un procedimiento almacenado que nose debuelbe 1 o 0 dependiendo si es correcta lña contraseña y el usuario y retoornamos ese valor
         Conexion = new Conexion();
         Connection con = Conexion.connSeguridad();
         if (con == null) {

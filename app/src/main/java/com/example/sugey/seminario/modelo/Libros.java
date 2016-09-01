@@ -10,7 +10,9 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.ArrayList;
+import java.util.IllegalFormatCodePointException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
@@ -21,7 +23,7 @@ public class Libros {
 
     //variables
 
-   Conexion Conexion;
+    Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
     CallableStatement cst;
@@ -47,7 +49,16 @@ public class Libros {
     int Estatus;
     String numero;
 
+    //Constructor
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
 
+    public Libros(){
+
+    }
+
+  //propiedades
     public String getTitulo() {
         return Titulo;
     }
@@ -161,8 +172,6 @@ public class Libros {
         Ilustrado = ilustrado;
     }
 
-
-
     public Image getPortada() {
         return Portada;
     }
@@ -207,18 +216,9 @@ public class Libros {
         return numero;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
 
-
-
-    //Constructor
-    public Libros(){
-
-    }
-
-   public boolean Guardar(){
+   //metodos
+    public boolean Guardar(){
        boolean guardo = false;
 
        Conexion = new Conexion();
@@ -269,6 +269,75 @@ public class Libros {
        return guardo;
    }
 
+    public int cantidadLibros(String isbn){
+        //cantidad de libros correspondientes a un isb en especifico
+        int cont =1;
+        Conexion = new Conexion();
+        Connection con = Conexion.CONN();
+        if (con == null) {
+
+
+        } else {
+            try {
+
+                cst = con.prepareCall("{call binCantidadLibros(?,?)}");
+                cst.setString(1,isbn);
+                cst.registerOutParameter (2, Types.INTEGER);
+                cst.executeUpdate();
+                cont = cst.getInt(2);
+                cst.close();
+            } catch (Exception ex) {
+
+                System.out.println ("El error es  = " + ex.getMessage());
+                ex.printStackTrace();
+
+            }
+        }
+
+        if (cont == 0){
+            cont=1;
+        }else{
+            cont = cont+1;
+        }
+
+        return cont;
+    }
+
+    public int cantidadLibros2(String titulo,int autor, int editorial){
+        //cantidad de libros correspondientes a titulo editorial autor
+        int cont =1;
+        Conexion = new Conexion();
+        Connection con = Conexion.CONN();
+        if (con == null) {
+
+
+        } else {
+            try {
+
+                cst = con.prepareCall("{call binCantidadLibros(?,?,?,?)}");
+                cst.setString(1,titulo);
+                cst.setInt(2,autor);
+                cst.setInt(3,editorial);
+                cst.registerOutParameter (4, Types.INTEGER);
+                cst.executeUpdate();
+                cont = cst.getInt(4);
+                cst.close();
+            } catch (Exception ex) {
+
+                System.out.println ("El error es  = " + ex.getMessage());
+                ex.printStackTrace();
+
+            }
+        }
+
+        if (cont == 0){
+            cont=1;
+        }else{
+            cont = cont+1;
+        }
+
+        return cont;
+    }
 
 
 }

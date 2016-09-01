@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_principal);
 
         //iniciar elemntos
          iniciaElementos();
@@ -59,14 +59,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
     private void llenarCombos(){
 
@@ -126,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 Libros libro = new Libros();
                 try{
 
+                    // se obtienen los datos de los campos
                     libro.setTitulo(txtTitulo.getText().toString());
                     libro.setIdAutor(((Autores)cmbAutores.getSelectedItem()).getId());
                     libro.setEdicion(txtEdicion.getText().toString());
@@ -143,13 +140,25 @@ public class MainActivity extends AppCompatActivity {
                     libro.setMateria( txtMateria.getText().toString());
                     libro.setFormato(((Formato)cmbFormato.getSelectedItem()).getId());
                     libro.setEstatus(((LibroEstado)cmbEstadoLib.getSelectedItem()).getId());
-                    libro.setNumero("12354");
+
+                     //si no ecunta con isbn entonses se creara una etiqueta de lo contrario  la etiqueta seria
+                    //isbn mas consecutivo
+                     String isb = txtIsbn.getText().toString();
+                    if(!isb.equals("")){
+                        libro.setNumero(txtIsbn.getText().toString()+libro.cantidadLibros(txtIsbn.getText().toString()));
+                    }else{
+
+                        int aut = ((Autores)cmbAutores.getSelectedItem()).getId();
+                        int edit = ((Editoriales)cmbEditorial.getSelectedItem()).getId();
+                        String cant  = Integer.toString(libro.cantidadLibros2(txtTitulo.getText().toString(),aut,edit));
+                        String eiqueta = crearEtiqueta();
+                        String et = cant+eiqueta;
+                        libro.setNumero(et);
+
+                    }
 
                     libro.Guardar();
-
                     Toast.makeText(getApplicationContext(),"se guardo con exito",Toast.LENGTH_LONG).show();
-
-
                 }catch (Exception ex){
                     Toast.makeText(getApplicationContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
                 }finally {
@@ -193,6 +202,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private String crearEtiqueta(){
+        String Etiqueta="";
+
+         String ti = txtTitulo.getText().toString();
+         String au = cmbAutores.getSelectedItem().toString();
+         String ed = cmbEditorial.getSelectedItem().toString();
+         String ra = cmbRama.getSelectedItem().toString();
+         String ei = txtEdicion.getText().toString();
+         Etiqueta = ti.substring(0)+ti.substring(1)+au.substring(0)+au.substring(1)+ed.substring(0)+ed.substring(1)+ed.substring(2)+ra.substring(0)+ra.substring(1)+ra.substring(2)+ei;
+
+        return Etiqueta;
+    }
 
 
 }
