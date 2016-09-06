@@ -16,7 +16,7 @@ public class Tematica {
     com.example.sugey.seminario.baseDeDatos.Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
-
+    Tematica formt;
     int id;
     String nombre;
 
@@ -60,11 +60,12 @@ public class Tematica {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-
+                formt = new Tematica(0, "seleccione una opcion");
+                data2.add(formt);
                 while (rs.next()) {
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                   Tematica formt = new Tematica(id1, id2);
+                    formt = new Tematica(id1, id2);
                     data2.add(formt);
                 }
 

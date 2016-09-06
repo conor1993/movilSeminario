@@ -18,7 +18,7 @@ import java.util.LinkedList;
 public class Autores {
 
     //variables
-
+    Autores autor;
     Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
@@ -31,6 +31,7 @@ public class Autores {
     public  Autores(){
 
     }
+
     public Autores(int id, String nombre) {
         super();
         this.id = id;
@@ -65,11 +66,12 @@ public class Autores {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-
+                autor = new Autores(0, "seleccione una opcion");
+                data2.add(autor);
                 while (rs.next()) {
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    Autores autor = new Autores(id1, id2);
+                    autor = new Autores(id1, id2);
                     data2.add(autor);
                 }
 

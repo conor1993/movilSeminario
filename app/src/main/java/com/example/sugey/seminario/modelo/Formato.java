@@ -16,7 +16,7 @@ public class Formato {
     Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
-
+    Formato formt;
     int id;
     String nombre;
 
@@ -60,11 +60,12 @@ public class Formato {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-
+                formt = new Formato(0, "seleccione una opcion");
+                data2.add(formt);
                 while (rs.next()) {
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    Formato formt = new Formato(id1, id2);
+                    formt = new Formato(id1, id2);
                     data2.add(formt);
                 }
 

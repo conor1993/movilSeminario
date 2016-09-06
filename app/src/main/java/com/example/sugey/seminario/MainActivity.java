@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Rama rama;
         Tematica tematica;
         ArrayAdapter NoCoreAdapter2;
+        Libros libro;
     //contexto
          Context contexto = this;
         //botones
@@ -48,20 +50,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        //iniciar elemntos
-         iniciaElementos();
-         //llenar combos
-          llenarCombos();
-          //metodo guardar
-          GuardarLibro();
-        //se obtienen las referencias de los elemntos graficos
-
+            //iniciar elemntos
+             iniciaElementos();
+            //llenar combos
+             llenarCombos();
+            //metodo guardar
+             GuardarLibro();
+            //eventos de spiner
+             cambioDeValue();
 
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private void iniciaElementos() {
+        txtTitulo = (TextView)findViewById(R.id.TxtTitulo);
+        cmbAutores = (Spinner)findViewById(R.id.cmbautor);
+        txtEdicion = (TextView)findViewById(R.id.Txtedicion);
+        cmbEditorial =(Spinner) findViewById(R.id.cmbEditorial);
+        cmbRama =(Spinner)findViewById(R.id.cmbRama);
+        cmbPais =(Spinner)findViewById(R.id.cmbPais);
+        cmbTematica= (Spinner)findViewById(R.id.cmbTematica);
+        txtAño =(TextView)findViewById(R.id.TxtAño);
+        txPasillo = (TextView)findViewById(R.id.TxtPasillo);
+        txtEstante =(TextView)findViewById(R.id.Txtestante);
+        txtNivel  =(TextView)findViewById(R.id.Txtnivel);
+        txtIsbn = (TextView)findViewById(R.id.TxtIsbn);
+        chkIlustrado = (CheckBox)findViewById(R.id.ChkIlustrado);
+        ExclusivoConsulta = (CheckBox)findViewById(R.id.ChkExclusivoConsulta);
+        txtMateria = (TextView)findViewById(R.id.TxtImateria);
+        cmbFormato = (Spinner)findViewById(R.id.cmbFormato);
+        cmbEstadoLib=(Spinner)findViewById(R.id.cmbEstado);
     }
 
     private void llenarCombos(){
@@ -112,14 +134,12 @@ public class MainActivity extends AppCompatActivity {
         //evento al presionar el boton guardar
 
         //
-
-
         //bono guardar
         btnGuardar =(Button)findViewById(R.id.btnGuardar);
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Libros libro = new Libros();
+                libro = new Libros();
                 try{
 
                     // se obtienen los datos de los campos
@@ -168,26 +188,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void iniciaElementos() {
-        txtTitulo = (TextView)findViewById(R.id.TxtTitulo);
-        cmbAutores = (Spinner)findViewById(R.id.cmbautor);
-        txtEdicion = (TextView)findViewById(R.id.Txtedicion);
-        cmbEditorial =(Spinner) findViewById(R.id.cmbEditorial);
-        cmbRama =(Spinner)findViewById(R.id.cmbRama);
-        cmbPais =(Spinner)findViewById(R.id.cmbPais);
-        cmbTematica= (Spinner)findViewById(R.id.cmbTematica);
-        txtAño =(TextView)findViewById(R.id.TxtAño);
-        txPasillo = (TextView)findViewById(R.id.TxtPasillo);
-        txtEstante =(TextView)findViewById(R.id.Txtestante);
-        txtNivel  =(TextView)findViewById(R.id.Txtnivel);
-        txtIsbn = (TextView)findViewById(R.id.TxtIsbn);
-        chkIlustrado = (CheckBox)findViewById(R.id.ChkIlustrado);
-        ExclusivoConsulta = (CheckBox)findViewById(R.id.ChkExclusivoConsulta);
-        txtMateria = (TextView)findViewById(R.id.TxtImateria);
-        cmbFormato = (Spinner)findViewById(R.id.cmbFormato);
-        cmbEstadoLib=(Spinner)findViewById(R.id.cmbEstado);
-    }
-
     private void limpiarCampos(){
         txtTitulo.setText("");
         txtEdicion.setText("");
@@ -213,6 +213,49 @@ public class MainActivity extends AppCompatActivity {
          Etiqueta = ti.substring(0)+ti.substring(1)+au.substring(0)+au.substring(1)+ed.substring(0)+ed.substring(1)+ed.substring(2)+ra.substring(0)+ra.substring(1)+ra.substring(2)+ei;
 
         return Etiqueta;
+    }
+
+    private void cambioDeValue() {
+
+        //  cambio de valor de un valor de item de spiner
+         cmbAutores.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                 if (!txtTitulo.getText().toString().equals("")) {
+                     comprobarExistencia();
+                 }
+             }
+
+             @Override
+             public void onNothingSelected(AdapterView<?> parent) {
+
+             }
+         });
+
+        cmbEditorial.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (!txtTitulo.getText().toString().equals("")) {
+                    comprobarExistencia();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+    private boolean  comprobarExistencia(){
+        libro = new Libros();
+        boolean flag;
+
+         flag =  libro.obtenerLibros(txtTitulo.getText().toString(),((Autores)cmbAutores.getSelectedItem()).getId(),((Editoriales)cmbEditorial.getSelectedItem()).getId());
+
+          return flag;
+
     }
 
 

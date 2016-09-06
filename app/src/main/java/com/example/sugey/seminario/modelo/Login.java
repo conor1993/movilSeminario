@@ -74,11 +74,18 @@ public class Login {
                 System.out.println ("El error es  = " + ex.getMessage());
                 ex.printStackTrace();
 
+            }finally {
+                try {
+                    con.close();
+                }catch (Exception ex){
+
+                }
             }
         }
 
 
         if (log == 1){
+
               logeo=true;
           }
 

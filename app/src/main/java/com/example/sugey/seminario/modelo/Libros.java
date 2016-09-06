@@ -339,5 +339,52 @@ public class Libros {
         return cont;
     }
 
+    public boolean obtenerLibros(String tit,int idaut,int edit){
+        boolean retorno = false;
+        String  titulo;
+        int   cont =0;
+        Conexion = new Conexion();
+        Connection con = Conexion.CONN();
+
+
+
+
+        if (con == null) {
+
+
+        } else {
+            try {
+                //instruccion
+
+                String query = "select titulo from BInvLibros where titulo = '"+tit+"'  and  idautor = "+idaut +" and ideditorial ="+edit;
+                stmt = con.prepareStatement(query);
+                rs = stmt.executeQuery();
+
+              while(rs.next()){
+                  cont++;
+              }
+
+                if (cont >0){
+                    retorno = true;
+                }
+
+
+            } catch (Exception ex) {
+                System.out.println ("El error es  = " + ex.getMessage());
+                ex.printStackTrace();
+
+            }
+
+        }
+
+        try {
+            con.close();
+        } catch (Exception ex) {
+
+        }
+
+
+        return retorno;
+    }
 
 }

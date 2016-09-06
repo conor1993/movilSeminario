@@ -17,7 +17,7 @@ public class Editoriales {
     Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
-
+    Editoriales edit;
     //atributos
     int id;
     String nombre;
@@ -59,12 +59,13 @@ public class Editoriales {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-
+                edit = new Editoriales(0, "seleccione una opcion");
+                data2.add(edit);
                 while (rs.next()) {
 
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    Editoriales edit = new Editoriales(id1, id2);
+                    edit = new Editoriales(id1, id2);
                     data2.add(edit);
                 }
 

@@ -18,7 +18,7 @@ public class LibroEstado {
     Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
-
+    LibroEstado formt;
     int id;
     String nombre;
 
@@ -62,11 +62,12 @@ public class LibroEstado {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-
+                formt = new LibroEstado(0, "seleccione una opcion");
+                data2.add(formt);
                 while (rs.next()) {
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    LibroEstado formt = new LibroEstado(id1, id2);
+                    formt = new LibroEstado(id1, id2);
                     data2.add(formt);
                 }
 

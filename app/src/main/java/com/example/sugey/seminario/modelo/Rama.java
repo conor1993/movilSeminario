@@ -16,7 +16,7 @@ public class Rama {
     com.example.sugey.seminario.baseDeDatos.Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
-
+    Rama formt;
     int id;
     String nombre;
 
@@ -60,11 +60,12 @@ public class Rama {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-
+                formt = new Rama(0, "seleccione opcion");
+                data2.add(formt);
                 while (rs.next()) {
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    Rama formt = new Rama(id1, id2);
+                    formt = new Rama(id1, id2);
                     data2.add(formt);
                 }
 
