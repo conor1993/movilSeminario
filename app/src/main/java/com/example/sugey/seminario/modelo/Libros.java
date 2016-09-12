@@ -218,6 +218,7 @@ public class Libros {
 
 
    //metodos
+
     public boolean Guardar(){
        boolean guardo = false;
 
@@ -314,7 +315,7 @@ public class Libros {
         } else {
             try {
 
-                cst = con.prepareCall("{call binCantidadLibros(?,?,?,?)}");
+                cst = con.prepareCall("{call binCantidadLibros2(?,?,?,?)}");
                 cst.setString(1,titulo);
                 cst.setInt(2,autor);
                 cst.setInt(3,editorial);
@@ -347,6 +348,51 @@ public class Libros {
         Connection con = Conexion.CONN();
 
 
+        if (con == null) {
+
+
+        } else {
+            try {
+                //instruccion
+
+                String query = "select * from BInvLibros where titulo = '"+tit+"'  and  idautor = "+idaut +" and ideditorial ="+edit;
+                stmt = con.prepareStatement(query);
+                rs = stmt.executeQuery();
+                Libros lib = new Libros();
+              while(rs.next()){
+
+                  cont++;
+              }
+
+                if (cont >0){
+                    retorno = true;
+                }
+
+
+            } catch (Exception ex) {
+                System.out.println ("El error es  = " + ex.getMessage());
+                ex.printStackTrace();
+
+            }
+
+        }
+
+        try {
+            con.close();
+        } catch (Exception ex) {
+
+        }
+
+
+        return retorno;
+    }
+
+    public boolean obtenerLibrosisbn(String isbn){
+        boolean retorno = false;
+        String  titulo;
+        int   cont =0;
+        Conexion = new Conexion();
+        Connection con = Conexion.CONN();
 
 
         if (con == null) {
@@ -356,13 +402,14 @@ public class Libros {
             try {
                 //instruccion
 
-                String query = "select titulo from BInvLibros where titulo = '"+tit+"'  and  idautor = "+idaut +" and ideditorial ="+edit;
+                String query = "select * from BInvLibros where isbn = "+isbn;
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
+                Libros lib = new Libros();
+                while(rs.next()){
 
-              while(rs.next()){
-                  cont++;
-              }
+                    cont++;
+                }
 
                 if (cont >0){
                     retorno = true;

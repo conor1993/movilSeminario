@@ -221,6 +221,19 @@
             android:layout_marginTop="2dp"
             android:layout_gravity="center_horizontal"/>
 
+        <Button android:id="@+id/scan_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Scanear Codigo" />
+        <TextView
+            android:id="@+id/lblcodigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginTop="2dp"
+            />
+
         <CheckBox android:id="@+id/ChkExclusivoConsulta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -234,6 +247,7 @@
             android:layout_marginTop="2dp"
             android:text="Ilustrado"
             android:checked="false" />
+
 
         <Button
             android:id="@+id/btnGuardar"
