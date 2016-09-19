@@ -1,5 +1,6 @@
 package com.example.sugey.seminario.modelo;
 
+import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -15,6 +16,7 @@ import java.util.LinkedList;
  */
 public class LibroEstado {
     //atributos
+    Context ctx;
     Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
@@ -24,13 +26,14 @@ public class LibroEstado {
 
 
     //Constructor
-    public  LibroEstado(){
-
+    public  LibroEstado(Context ctx){
+            this.ctx = ctx;
     }
-    public LibroEstado(int id, String nombre) {
+    public LibroEstado(int id, String nombre,Context ctx) {
         super();
         this.id = id;
         this.nombre = nombre;
+        this.ctx = ctx;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class LibroEstado {
     public LinkedList<LibroEstado> obtenerEstadoLibro(){
 
 
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.CONN();
         LinkedList<LibroEstado> data2 = new LinkedList<LibroEstado>();
 
@@ -62,12 +65,12 @@ public class LibroEstado {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-                formt = new LibroEstado(0, "seleccione una opcion");
+                formt = new LibroEstado(0, "seleccione una opcion",ctx);
                 data2.add(formt);
                 while (rs.next()) {
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    formt = new LibroEstado(id1, id2);
+                    formt = new LibroEstado(id1, id2,ctx);
                     data2.add(formt);
                 }
 

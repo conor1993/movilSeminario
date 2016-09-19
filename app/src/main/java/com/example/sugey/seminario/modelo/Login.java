@@ -1,5 +1,7 @@
 package com.example.sugey.seminario.modelo;
 
+import android.content.Context;
+
 import com.example.sugey.seminario.baseDeDatos.Conexion;
 
 import java.sql.CallableStatement;
@@ -22,13 +24,15 @@ public class Login {
     //propiedades
     String password;
     String usuario;
+    Context ctx;
 
-    public Login(String password, String usuario) {
+    public Login(String password, String usuario,Context ctx) {
         this.password = password;
         this.usuario = usuario;
+        this.ctx =  ctx;
     }
 
-    public Login(){
+    public Login(String s, String toString){
 
     }
 
@@ -53,7 +57,7 @@ public class Login {
         Boolean logeo = false;
         log=0;
          //llamamos a un procedimiento almacenado que nose debuelbe 1 o 0 dependiendo si es correcta lña contraseña y el usuario y retoornamos ese valor
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.connSeguridad();
         if (con == null) {
 

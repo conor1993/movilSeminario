@@ -30,15 +30,27 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <AutoCompleteTextView
+                android:id="@+id/txtusuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="usuario"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+
+
                 <AutoCompleteTextView
-                    android:id="@+id/email"
+                    android:id="@+id/txtip"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Usuario"
+                    android:hint="ip"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
@@ -50,7 +62,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/txtpassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
@@ -68,18 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Entrar"
+                android:text="Guardar"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/lblseguridad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Conexion"
-                android:layout_marginTop="20dp"
-                />
-
-
 
 
         </LinearLayout>

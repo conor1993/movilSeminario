@@ -18,6 +18,7 @@ import java.util.LinkedList;
 public class Autores {
 
     //variables
+    Context ctx;
     Autores autor;
     Conexion Conexion;
     PreparedStatement stmt;
@@ -28,14 +29,15 @@ public class Autores {
     String nombre;
 
     //Constructor
-    public  Autores(){
-
+    public  Autores(Context ctx){
+      this.ctx = ctx;
     }
 
-    public Autores(int id, String nombre) {
+    public Autores(int id, String nombre,Context ctx) {
         super();
         this.id = id;
         this.nombre = nombre;
+        this.ctx = ctx;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class Autores {
 
     public LinkedList<Autores> obtenerAutores() {
 
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.CONN();
 
 
@@ -66,12 +68,12 @@ public class Autores {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-                autor = new Autores(0, "seleccione una opcion");
+                autor = new Autores(0, "seleccione una opcion",ctx);
                 data2.add(autor);
                 while (rs.next()) {
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    autor = new Autores(id1, id2);
+                    autor = new Autores(id1, id2,ctx);
                     data2.add(autor);
                 }
 

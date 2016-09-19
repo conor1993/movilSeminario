@@ -1,5 +1,6 @@
 package com.example.sugey.seminario.modelo;
 
+import android.content.Context;
 import android.media.Image;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ import java.util.LinkedList;
 public class Libros {
 
     //variables
-
+    Context ctx;
     Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
@@ -49,14 +50,16 @@ public class Libros {
     int Estatus;
     String numero;
 
+
+    public Libros(Context ctx){
+        this.ctx = ctx;
+    }
+
     //Constructor
     public void setNumero(String numero) {
         this.numero = numero;
     }
 
-    public Libros(){
-
-    }
 
   //propiedades
     public String getTitulo() {
@@ -222,7 +225,7 @@ public class Libros {
     public boolean Guardar(){
        boolean guardo = false;
 
-       Conexion = new Conexion();
+       Conexion = new Conexion(ctx);
        Connection con = Conexion.CONN();
        if (con == null) {
 
@@ -273,7 +276,7 @@ public class Libros {
     public int cantidadLibros(String isbn){
         //cantidad de libros correspondientes a un isb en especifico
         int cont =1;
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.CONN();
         if (con == null) {
 
@@ -307,7 +310,7 @@ public class Libros {
     public int cantidadLibros2(String titulo,int autor, int editorial){
         //cantidad de libros correspondientes a titulo editorial autor
         int cont =1;
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.CONN();
         if (con == null) {
 
@@ -344,7 +347,7 @@ public class Libros {
         boolean retorno = false;
         String  titulo;
         int   cont =0;
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.CONN();
 
 
@@ -358,7 +361,7 @@ public class Libros {
                 String query = "select * from BInvLibros where titulo = '"+tit+"'  and  idautor = "+idaut +" and ideditorial ="+edit;
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
-                Libros lib = new Libros();
+                //Libros lib = new Libros();
               while(rs.next()){
 
                   cont++;
@@ -391,7 +394,7 @@ public class Libros {
         boolean retorno = false;
         String  titulo;
         int   cont =0;
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.CONN();
 
 
@@ -402,10 +405,10 @@ public class Libros {
             try {
                 //instruccion
 
-                String query = "select * from BInvLibros where isbn = "+isbn;
+                String query = "select * from BInvLibros where isbn = '"+isbn+"'";
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
-                Libros lib = new Libros();
+               // Libros lib = new Libros();
                 while(rs.next()){
 
                     cont++;
@@ -417,7 +420,7 @@ public class Libros {
 
 
             } catch (Exception ex) {
-                System.out.println ("El error es  = " + ex.getMessage());
+                System.out.println ("El error en buyscar por isbn es   = " + ex.getMessage());
                 ex.printStackTrace();
 
             }

@@ -1,5 +1,7 @@
 package com.example.sugey.seminario.modelo;
 
+import android.content.Context;
+
 import com.example.sugey.seminario.baseDeDatos.Conexion;
 
 import java.sql.Connection;
@@ -13,6 +15,7 @@ import java.util.LinkedList;
 public class Rama {
 
     //atributos
+    Context ctx;
     com.example.sugey.seminario.baseDeDatos.Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
@@ -22,13 +25,14 @@ public class Rama {
 
 
     //Constructor
-    public  Rama(){
-
+    public  Rama(Context ctx){
+        this.ctx =ctx;
     }
-    public Rama(int id, String nombre) {
+    public Rama(int id, String nombre,Context ctx) {
         super();
         this.id = id;
         this.nombre = nombre;
+        this.ctx = ctx;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class Rama {
     public LinkedList<Rama> obtenerRama(){
 
 
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.CONN();
         LinkedList<Rama> data2 = new LinkedList<Rama>();
 
@@ -60,12 +64,12 @@ public class Rama {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-                formt = new Rama(0, "seleccione opcion");
+                formt = new Rama(0, "seleccione opcion",ctx);
                 data2.add(formt);
                 while (rs.next()) {
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    formt = new Rama(id1, id2);
+                    formt = new Rama(id1, id2,ctx);
                     data2.add(formt);
                 }
 

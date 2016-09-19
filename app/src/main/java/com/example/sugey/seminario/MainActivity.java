@@ -2,11 +2,10 @@ package com.example.sugey.seminario;
 
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.camera2.params.Face;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.MonthDisplayHelper;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -126,42 +125,40 @@ public class MainActivity extends AppCompatActivity  implements OnClickListener{
 
     private void llenarCombos(){
 
-
-
         //llenar combo autores
-            autores = new Autores();
+            autores = new Autores(getApplicationContext());
             NoCoreAdapter2 = new ArrayAdapter(contexto, android.R.layout.simple_spinner_item, autores.obtenerAutores());
             cmbAutores.setAdapter(NoCoreAdapter2);
        //llenar combo de editoriales
-            editorial = new Editoriales();
+            editorial = new Editoriales(getApplicationContext());
 
             NoCoreAdapter2 = new ArrayAdapter(contexto, android.R.layout.simple_spinner_item, editorial.obtenerEditorial());
             cmbEditorial.setAdapter(NoCoreAdapter2);
         //llenar combo de paises
-           pais = new Pais();
+           pais = new Pais(getApplicationContext());
 
            NoCoreAdapter2 = new ArrayAdapter(contexto, android.R.layout.simple_spinner_item,pais.obtenerPias());
            cmbPais.setAdapter(NoCoreAdapter2);
         //llenar combo de Formato
-            formato = new Formato();
+            formato = new Formato(getApplicationContext());
 
             NoCoreAdapter2 = new ArrayAdapter(contexto, android.R.layout.simple_spinner_item, formato.obtenerFormato());
             cmbFormato.setAdapter(NoCoreAdapter2);
 
           //llenarcombo estadoLibroi
-            libEstado = new LibroEstado();
+            libEstado = new LibroEstado(getApplicationContext());
 
             NoCoreAdapter2 = new ArrayAdapter(contexto, android.R.layout.simple_spinner_item, libEstado.obtenerEstadoLibro());
             cmbEstadoLib.setAdapter(NoCoreAdapter2);
 
             //llenarcombo ramas
-             rama= new Rama();
+             rama= new Rama(getApplicationContext());
 
             NoCoreAdapter2 = new ArrayAdapter(contexto, android.R.layout.simple_spinner_item, rama.obtenerRama());
             cmbRama.setAdapter(NoCoreAdapter2);
 
             //llenarcombo tematicas
-            tematica= new Tematica();
+            tematica= new Tematica(getApplicationContext());
 
             NoCoreAdapter2 = new ArrayAdapter(contexto, android.R.layout.simple_spinner_item, tematica.obtenerTematica());
             cmbTematica.setAdapter(NoCoreAdapter2);
@@ -184,7 +181,14 @@ public class MainActivity extends AppCompatActivity  implements OnClickListener{
     }
 
     private void guardar(){
-        libro = new Libros();
+
+        //validamos si los campos obligatoris estan llenos
+
+        if (!validarVacios())
+            return;
+
+        libro = new Libros(getApplicationContext());
+
         try{
 
             // se obtienen los datos de los campos
@@ -299,7 +303,9 @@ public class MainActivity extends AppCompatActivity  implements OnClickListener{
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    comprobarExistencia(2);
+                    if (!txtIsbn.getText().toString().equals("")){
+                        comprobarExistencia(2);
+                    }
                 }
             }
         });
@@ -307,7 +313,7 @@ public class MainActivity extends AppCompatActivity  implements OnClickListener{
     }
 
     private void  comprobarExistencia(int seleccion){
-        libro = new Libros();
+        libro = new Libros(getApplicationContext());
         boolean flag = false;
 
         if(seleccion == 1){flag = libro.obtenerLibros(txtTitulo.getText().toString(),((Autores)cmbAutores.getSelectedItem()).getId(),((Editoriales)cmbEditorial.getSelectedItem()).getId());}
@@ -315,7 +321,7 @@ public class MainActivity extends AppCompatActivity  implements OnClickListener{
 
         if(flag == true){
             ventanaConfirmacion();
-            Conexion = new Conexion();
+            Conexion = new Conexion(getApplicationContext());
             Connection con = Conexion.CONN();
 
 
@@ -329,7 +335,7 @@ public class MainActivity extends AppCompatActivity  implements OnClickListener{
                     if(seleccion == 1){
                          query = "select top 1 * from BInvLibros where titulo = '"+txtTitulo.getText().toString()+"'  and  idautor = "+((Autores)cmbAutores.getSelectedItem()).getId()+" and ideditorial ="+((Editoriales)cmbEditorial.getSelectedItem()).getId();
                     } else if (seleccion == 2) {
-                         query = "select top 1 * from BInvLibros where isbn = "+txtIsbn.getText().toString();
+                         query = "select top 1 * from BInvLibros where isbn = '"+txtIsbn.getText().toString()+"'";
 
                     }
 
@@ -390,7 +396,7 @@ public class MainActivity extends AppCompatActivity  implements OnClickListener{
 
                     }
                 } catch (Exception ex) {
-                    System.out.println ("El error es  = " + ex.getMessage());
+                    System.out.println ("El error es  en comprobar existencia 2 es" + ex.getMessage());
                     ex.printStackTrace();
                 }
             }
@@ -440,6 +446,44 @@ public class MainActivity extends AppCompatActivity  implements OnClickListener{
                     "No se ha recibido datos del scaneo!", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+
+    public boolean validarVacios(){
+        boolean flag = true;
+        String Mensaje ="";
+
+            if (txtTitulo.getText().toString().equals(""))
+                Mensaje = Mensaje + "   * No se ha capturado el Titulo.\n";
+            if (((Autores)cmbAutores.getSelectedItem()).getId() == 0)
+                Mensaje = Mensaje + "   * No se ha capturado el Author.\n";
+            if(((Editoriales)cmbEditorial.getSelectedItem()).getId() == 0)
+                Mensaje = Mensaje + "   * No se ha capturado la editorial.\n";
+            if(((Pais)cmbPais.getSelectedItem()).getId() == 0)
+                Mensaje = Mensaje + "   * No se ha capturado el pais.\n";
+            if(((Rama)cmbRama.getSelectedItem()).getId() == 0)
+                Mensaje = Mensaje + "   * No se ha capturado la rama.\n";
+            if(((Tematica)cmbTematica.getSelectedItem()).getId() == 0)
+                Mensaje = Mensaje + "   * No se ha capturado la tematica.\n";
+            if(((LibroEstado)cmbEstadoLib.getSelectedItem()).getId() == 0)
+                Mensaje = Mensaje + "   * No se ha capturado el estatus.\n";
+            if(txtEdicion.getText().toString().equals(""))
+                Mensaje = Mensaje+ "    *No se ha capturado la edicion.\n";
+            if(txtAño.getText().toString().equals(""))
+                Mensaje = Mensaje + "   * No se ha capturado el año.\n";
+            if (txPasillo.getText().toString().equals(""))
+                Mensaje = Mensaje + "   * No se ha capturado el pasillo.\n";
+            if (txtEstante.getText().toString().equals(""))
+                Mensaje = Mensaje + "   * No se ha capturado el estante.\n";
+            if (txtNivel.getText().equals(""))
+                Mensaje = Mensaje + "   * No se ha capturado el nivel.\n";
+
+           if(!Mensaje.equals("")){
+               flag = false;
+               Mensaje = "Antes de guardar debe corregir lo siguiente:\n\n" + Mensaje;
+               Toast.makeText(getApplicationContext(),Mensaje,Toast.LENGTH_LONG).show();
+           }
+
+        return flag;
     }
 
 

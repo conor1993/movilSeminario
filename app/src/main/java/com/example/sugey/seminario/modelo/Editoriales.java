@@ -1,5 +1,7 @@
 package com.example.sugey.seminario.modelo;
 
+import android.content.Context;
+
 import com.example.sugey.seminario.baseDeDatos.Conexion;
 
 import java.sql.Connection;
@@ -13,7 +15,7 @@ import java.util.LinkedList;
 public class Editoriales {
 
     //variables
-
+    Context ctx;
     Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
@@ -23,13 +25,14 @@ public class Editoriales {
     String nombre;
 
     //Constructor
-    public  Editoriales(){
-
+    public  Editoriales(Context ctx){
+         this.ctx = ctx;
     }
-    public Editoriales(int id, String nombre) {
+    public Editoriales(int id, String nombre,Context ctx) {
         super();
         this.id = id;
         this.nombre = nombre;
+        this.ctx = ctx;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class Editoriales {
 
     public LinkedList<Editoriales> obtenerEditorial(){
 
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.CONN();
         LinkedList<Editoriales> data2 = new LinkedList<Editoriales>();
 
@@ -59,13 +62,13 @@ public class Editoriales {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-                edit = new Editoriales(0, "seleccione una opcion");
+                edit = new Editoriales(0, "seleccione una opcion",ctx);
                 data2.add(edit);
                 while (rs.next()) {
 
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    edit = new Editoriales(id1, id2);
+                    edit = new Editoriales(id1, id2,ctx);
                     data2.add(edit);
                 }
 

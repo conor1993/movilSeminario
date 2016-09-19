@@ -1,5 +1,7 @@
 package com.example.sugey.seminario.modelo;
 
+import android.content.Context;
+
 import com.example.sugey.seminario.baseDeDatos.Conexion;
 
 import java.sql.Connection;
@@ -13,6 +15,7 @@ import java.util.LinkedList;
 public class Pais {
 
     //variables
+    Context ctx;
     Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
@@ -22,13 +25,14 @@ public class Pais {
     String nombre;
 
     //Constructor
-    public  Pais(){
-
+    public  Pais(Context ctx){
+        this.ctx = ctx;
     }
-    public Pais(int id, String nombre) {
+    public Pais(int id, String nombre,Context ctx) {
         super();
         this.id = id;
         this.nombre = nombre;
+        this.ctx = ctx;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class Pais {
     public LinkedList<Pais> obtenerPias(){
 
 
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.CONN();
         LinkedList<Pais> data2 = new LinkedList<Pais>();
 
@@ -60,12 +64,12 @@ public class Pais {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-                pais = new Pais(0, "seleccione una opcion");
+                pais = new Pais(0, "seleccione una opcion",ctx);
                 data2.add(pais);
                 while (rs.next()) {
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    pais = new Pais(id1, id2);
+                    pais = new Pais(id1, id2,ctx);
                     data2.add(pais);
                 }
 

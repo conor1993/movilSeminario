@@ -5,7 +5,7 @@
         jar="C:\git\movilSeminario\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         revision="24.0.1"
-        sha1="b6d649427675a48ae74fc954ca50c757f573f9a7">
+        sha1="ba018239908df4a04065c588a905561cd7659c41">
         <dex dex="C:\git\movilSeminario\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_d76b1505fca8ba81d421ffd020a52f447ae7e775\classes.dex" />
     </item>
     <item
@@ -68,7 +68,7 @@
         jar="C:\git\movilSeminario\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         revision="24.0.1"
-        sha1="052b6ec13d9b7280f55cacd5b520b651db459bf4">
+        sha1="327efe6a8e8b8eba54e410f07828dd26fdd153e4">
         <dex dex="C:\git\movilSeminario\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_5b94366c3b53e1f14d92bb7acaf483382fbc6d1a\classes.dex" />
     </item>
     <item

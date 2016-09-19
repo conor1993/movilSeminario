@@ -1,5 +1,7 @@
 package com.example.sugey.seminario.modelo;
 
+import android.content.Context;
+
 import com.example.sugey.seminario.baseDeDatos.Conexion;
 
 import java.sql.Connection;
@@ -13,6 +15,7 @@ import java.util.LinkedList;
 public class Formato {
 
     //atributos
+    Context ctx;
     Conexion Conexion;
     PreparedStatement stmt;
     ResultSet rs;
@@ -22,13 +25,14 @@ public class Formato {
 
 
     //Constructor
-    public  Formato(){
-
+    public  Formato(Context ctx){
+        this.ctx = ctx;
     }
-    public Formato(int id, String nombre) {
+    public Formato(int id, String nombre,Context ctx) {
         super();
         this.id = id;
         this.nombre = nombre;
+        this.ctx = ctx;
     }
 
     @Override
@@ -43,7 +47,7 @@ public class Formato {
     public LinkedList<Formato> obtenerFormato(){
 
 
-        Conexion = new Conexion();
+        Conexion = new Conexion(ctx);
         Connection con = Conexion.CONN();
         LinkedList<Formato> data2 = new LinkedList<Formato>();
 
@@ -60,12 +64,12 @@ public class Formato {
                 stmt = con.prepareStatement(query);
                 rs = stmt.executeQuery();
 
-                formt = new Formato(0, "seleccione una opcion");
+                formt = new Formato(0, "seleccione una opcion",ctx);
                 data2.add(formt);
                 while (rs.next()) {
                     int id1 = rs.getInt("id");
                     String id2 = rs.getString("nombre");
-                    formt = new Formato(id1, id2);
+                    formt = new Formato(id1, id2,ctx);
                     data2.add(formt);
                 }
 
